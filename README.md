@@ -7,7 +7,7 @@ JavaScript
 - Конструкторы принято называть с большой буквы.
 - Конструкторы не отличаются от функций ничем. 
 
-```
+```JavaScript
 var Person, person, anotherPerson;
 
 Person = function (name) {
