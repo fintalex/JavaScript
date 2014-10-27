@@ -4,7 +4,75 @@ JavaScript
 ## <a name='OGL'> Оглавление </a>
 
 1. [Конструкторы и классы](#ConstrAndClass)
+2. [Прототипы и наследование](#ProtoAndInher)
 
+### <a name='ProtoAndInher'> Прототипы и наследование </a>
+
+Любой объект в JS имеет второй связанный с ним объект который называется прототипом.
+
+Объект наследует свойства прототипа (Prototype Inheritance).
+
+И это единственное наследование которое существует в JS. 
+
+- наследование в JS сводится к тому что мы создаем объект
+- а потом создаем новый объект для с помощью ключевого слова create
+- для чего это, допусти нам нужно создать много однотипных объектов.
+- и в таком случае лучше создать прототип и общие для него свойства. 
+
+```JS 
+var Person = {
+	constructor: function (name, age, gender) {
+		this.name = name;
+		this.age = age; 
+		this.gender = gender;
+		return this; // обязательно для возвращения
+	},
+	greet: function() {
+		console.log("Hi, I am " + this.name);
+	}
+};
+
+var person, anotherPerson, thirdPerson;
+
+person = Object.create(Person).constructor("vasya", 22, "male");
+anotherPerson = Object.create(Person).constructor("misha", 32, "male");
+thirdPerson = Object.create(Person).constructor("petya", 42, "famale");
+
+console.log(person.name);
+console.log(anotherPerson.name);
+console.log(thirdPerson.name);
+```
+
+---
+
+Допустим нам нужен новый класс WebDeveloper который должен иметь все те же свойства все что и класс Person. 
+
+```JS 
+var WebDeveloper = Object.create(Person);
+// более расширенные конструктор - хотим добавить свойство скилс
+WebDeveloper.constructor = function(name, age, gender, skills) {
+	// чтобы заново не перечислять свойства базового класса
+	Person.constructor.apply(this, arguments);
+	this.skills = skills || [];
+	return this; // обязательно в конструкторе	
+};
+
+var webDev = Object.create(WebDeveloper).constructor("Mark", 33, "male", ["css", "html", "ruby"]);
+console.log(webDev.skills);
+```
+
+Можно добавить на прототип еще один метод и попробуем его вызвать. А также мы можем обращаться к методам родительского класса Person.
+
+```JS
+
+WebDeveloper.develope = function() {
+	console.log("working...");
+};
+
+webDev.develope(); // working... 
+webDev.greet(); //Hi, I am Mark 
+
+** [Оглавление](#OGL)**
 
 ### <a name='ConstrAndClass'> Конструкторы и классы </a>
 
