@@ -312,3 +312,137 @@ console.log(JSON.parse(userData)); // Object {name: "Alex", age: 25, lastVisit: 
 ###<a name='Array'> Массивы </a>
 
 В данном разделе не будем говорить что такое масси и с чем его едят. Просто скажем некоторые хитрости и особенности работы с массивами, которые немного не укладываются в голове у тех, кто работает с C#
+
++ Элементы в массивы не обязательно должны идти под последовательными индексами
+
+```JS
+var  months = ["January", "February", "Marth", "April"];
+months[11] = "December";
+console.log(months); // ["January", "February", "Marth", "April", 11: "December"] 
+```
+
+---
+
++ Массивы в JS являются объектами
+
+```JS
+console.log(typeof months); // object
+```
+
+Поэтому у массивов есть функция-конструктор - Array. И мы можем с помощью него создавать новые массивы, передавая параметрами элементы массива. Кроме одного случая когда мы передаем один параметр - мы задаем длинну массива. 
+
+```js
+var secondArray = new Array (12);
+console.log(secondArray); // []
+console.log(secondArray.length); // 12
+```
+
+Но смысла в таком объявлении нет, так массивы в JS динамические и мы можем объявлять больше 12 элементов массива.
+
+---
+
+В литералах массивова мы можем пропускать элементы при объявлении. И пропущенные элементы будут иметь тип undefined. Если мы не объявим ни одного элемента массива, то длина такого элемента будет на один меньше ожидаемого, так как в литералах массива допускается лишняя запятая в конце. 
+
+```JS 
+var someArray = [ ,,,45];
+console.log(someArray); // [3: 45] 
+console.log(someArray[2]); // undefined 
+```
+
+---
+
+Индексы массивов это по сути тоже самое что и имена свойств объектов. И также как и именна свойст объектов они хранятся в виде строк и индекс превращается в строку. Правда индексами могут быть только неотрицательные числа. 
+
+```JS 
+months[45] = "UnrealMonth";
+months["fiftieth"] = "Fiftieth month";
+console.log(months); // ["January", "February", "Marth", "April", 11: "December", 45: "UnrealMonth", fiftieth: "Fiftieth month"]
+```
+
+Когда мы добавляем элементы с разными индексами автоматически обновляется свойство length. И это единственное отличие индексов от имен свойств. И это то что делает массив массивом.
+
+---
+
+Если присвоим свойству length какое-то значение то все элементы с индексом выше этого индекса будут удалены. 
+
+```JS 
+months.length = 2;
+console.log(months); // ["January", "February", fiftieth: "Fiftieth month"] 
+```
+
+Как видим удалились все элементы с индексом >= 2 , но не удалился элемент с индексом fiftieth. 
+
+Если удалять элемент с помощью ключевого слова delete, не изменят его длинны, и элементы не сдвигаются. 
+
+```JS 
+delete months[0];
+console.log(months); // [1: "February", fiftieth: "Fiftieth month"] 
+console.log(months[0]); // undefined 
+```
+
+---
+
+**Методы массива**
+
+Для рассмотрения метода возьмем некоторый массив из строк.
+
+```JS 
+var array = ["Monday","Tuesday", "Wednesday", "Thursday", "Friday"];
+
+var array = ["Monday","Tuesday", "Wednesday", "Thursday", "Friday"];
+
+// возвращает все элементы массива через ","
+console.log(array.join()); // Monday,Tuesday,Wednesday,Thursday,Friday 
+// принимает любую строку в качестве разделителя
+console.log(array.join(" | ")); // Monday | Tuesday | Wednesday | Thursday | Friday 
+
+// некоторые методы изменяют исходный массив
+// переворачивает массив и изменяет исходный
+console.log(array.reverse()); //["Friday", "Thursday", "Wednesday", "Tuesday", "Monday"] 
+console.log(array); // ["Friday", "Thursday", "Wednesday", "Tuesday", "Monday"] 
+
+console.log(array.sort()); // ["Friday", "Monday", "Thursday", "Tuesday", "Wednesday"] 
+
+// просто скалдывает с другими элементами, и не изменяет исходный
+console.log(array.concat("Sunday", ["Monday", "Tuesday"])); // ["Friday", "Monday", "Thursday", "Tuesday", "Wednesday", "Sunday", "Monday", "Tuesday"] 
+
+// slice работает также как и со строками
+// 
+console.log(array.slice(1)); // ["Monday", "Thursday", "Tuesday", "Wednesday"] 
+// изменяет исходный массив
+// вставляет в массив 
+// возвращает то что вырезал
+console.log(array.splice(1,1, "Some", "day")); // ["Monday"] 
+console.log(array); // ["Friday", "Some", "day", "Thursday", "Tuesday", "Wednesday"] 
+
+// вставляет в конец новый элемент
+array.push("weekend"); 
+console.log(array);// ["Friday", "Some", "day", "Thursday", "Tuesday", "Wednesday", "weekend"] 
+
+// просто вставляет в начало новый элемент 
+array.unshift("work"); 
+console.log(array);// ["work", "Friday", "Some", "day", "Thursday", "Tuesday", "Wednesday", "weekend"] 
+
+// pop просто удаляет последний элемент и возвращает его его
+console.log(array.pop()); // weekend 
+console.log(array.pop()); // Wednesday 
+console.log(array.pop()); // Tuesday 
+console.log(array.pop()); // Thursday 
+console.log(array); // ["work", "Friday", "Some", "day"] 
+
+// shift удаляет элемент из начала массива и возвращает его
+console.log(array.shift()); // work 
+console.log(array); // ["Friday", "Some", "day"] 
+```
+
+
+
+
+
+
+
+
+
+
+
+
