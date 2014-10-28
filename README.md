@@ -4,7 +4,8 @@ JavaScript
 ## <a name='OGL'> Оглавление </a>
 
 1. [Прототипы и наследование](#ProtoAndInher)
-1. [Конструкторы и классы](#ConstrAndClass)
+2. [Конструкторы и классы](#ConstrAndClass)
+3. [Цепные вызовы методов](#ChainChalMethod)
 
 ###<a name='ProtoAndInher'> Прототипы и наследование </a>
 
@@ -171,3 +172,87 @@ console.log("the name is: " + devel);
 
 **[Оглавление](#OGL)**
 
+###<a name='ChainChalMethod'> Цепные вызовы методов </a>
+
+В JS уже есть методы которые можно вызывать по цепочке, например при работе со строками
+
+```JS 
+var st, newStr; 
+
+str = "Мальенький кролик по травке скочит";
+
+newStr = str
+	.replace("кролик", "ежик") // заменим
+	.concat(" , травка ежику пузико щекочит") // добавим что то в конец
+	.toUpperCase() // к верхнему регистру
+	.replace(/ /g, "\n") // заменим все пробелы на переносы строк
+	.slice(10); // уберем первые 10 символов
+
+console.log(newStr);
+```
+
+Каждый метод возвращает в новую строку, и нам не надо создавать новые переменные, а просто вызывать методы по цепочке.
+
+Тоже самое можно использовать при работе с объектами.
+
+```JS
+// нам нужен класс для работы с двумерными векторами
+var Vec2 = function(x,y) {
+	this.x = x; 
+	this.y = y;
+};
+
+// метод для сложения вектора
+// !!!!!!!!! и этот метод мы хотим использовать в цепочке вызовов и метода Update ниже 
+Vec2.prototype.add = function(vec) { 
+	this.x += vec.x;
+	this.y += vec.y;
+	return this; // поэтому когда мы все сложили мы должны вернуть наш объект
+};
+
+// мтеод умножения вектора
+Vec2.prototype.multScalar = function(scalar) { 
+	this.x *= scalar;
+	this.y *= scalar;
+	return this;
+};
+
+// какие-то внешние факторы
+var world = {
+	gravity: new Vec2(0,1),
+	airResistance: .9,  // сопротивление воздуха
+	wind: new Vec2(10, 1), // боковой ветер
+	control: new Vec2( -3, -5) 
+};
+
+// есть какой то объект, у которого есть скорость, и метод update
+var object = {
+	position: new Vec2 (10, 20),
+	speed: new Vec2(1, 3),
+	update: function() { // обновить положение объекта , для отрисовки в следующий раз
+		this.speed
+			.add(world.gravity) // а теперь мы можем 
+			.add(world.wind) // вызывать  метод add 
+			.add(world.control) // сколько угодно
+			.multScalar(world.airResistance);
+
+		return this.position.add(this.speed);
+	}
+};
+
+console.log(object.update());
+console.log(object.update());
+console.log(object.update());
+console.log(object.update());
+console.log(object.update());
+```
+
+> Vec2 {x: 17.2, y: 20, add: function, multScalar: function} 
+
+> Vec2 {x: 29.979999999999997, y: 17.3, add: function, multScalar: function} 
+
+> Vec2 {x: 47.782, y: 12.170000000000002, add: function, multScalar: function} 
+
+> Vec2 {x: 70.1038, y: 4.853000000000002, add: function, multScalar: function} 
+
+> Vec2 {x: 96.49342000000001, y: -4.432299999999999, add: function, multScalar: function} 
