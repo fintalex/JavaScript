@@ -6,6 +6,7 @@ JavaScript
 1. [Прототипы и наследование](#ProtoAndInher)
 2. [Конструкторы и классы](#ConstrAndClass)
 3. [Цепные вызовы методов](#ChainChalMethod)
+4. [JSON](#JSON)
 
 ###<a name='ProtoAndInher'> Прототипы и наследование </a>
 
@@ -256,3 +257,52 @@ console.log(object.update());
 > Vec2 {x: 70.1038, y: 4.853000000000002, add: function, multScalar: function} 
 
 > Vec2 {x: 96.49342000000001, y: -4.432299999999999, add: function, multScalar: function} 
+
+**[Оглавление](#OGL)**
+
+####<a name='JSON'> JSON </a>
+
+Сериализация объекта - преобразование объекта в строки. 
+
+- Например при передачи данных с сервера 
+- Также можно хранить данные локально в localStorage
+
+```JS 
+var user = {
+	name: "Alex",
+	age: 25
+};
+
+// для получения строки из объекта
+var userData = JSON.stringify(user);
+console.log(userData); // {"name":"Alex","age":25} 
+
+// для того чтобы получить из строки объект
+console.log(JSON.parse(userData)); // Object {name: "Alex", age: 25} 
+```
+
+Но если у объекта есть метод toJSON - то он будет определять что мы будем преобразовывать в строку. Таким образом мы можем определить что нужно отображать в строке (в примере ниже мы скрыли id и friends)
+
+```JS 
+var user = {
+	name: "Alex",
+	age: 25,
+	id: 3,
+	lastVisit: Date.now(),
+	friends: [234, 232, 222],
+	toJSON: function () {
+		return {
+			name: this.name, 
+			age: this.age,
+			lastVisit: this.lastVisit
+		}
+	}
+};
+
+// для получения строки из объекта
+var userData = JSON.stringify(user);
+console.log(userData); // {"name":"Alex","age":25,"lastVisit":1414479825874} 
+
+// для того чтобы получить из строки объект
+console.log(JSON.parse(userData)); // Object {name: "Alex", age: 25, lastVisit: 1414479825874} 
+```
