@@ -494,8 +494,36 @@ console.log(array.every(function(e){ return e.length >=2})); // true
 console.log(array.some(function(e){ return e.indexOf('#') > -1})); // true 
 ```
 
+--- 
 
+Метод возвращает одно значение, которое получается в рез-те выполнения функции для каждого элемента массива с возможность сохранения промежуточного результата.
+Метод reduce и reduceRight проходят массива слева направо и справа налево и callback принимает 4 аргумента но мы будем использовать только первые два.  а - промежуточное значение, b - текущий элемент массива.
 
+```JS
+var numbers = [1,2,3,4,5,6];
+var reduced = numbers.reduce(function(a,b, index, arr) {
+	// return a + b; // просто сложить все элементы
+	 return a * ( b%3 ===  0? b : 1); // перемножить числа кратные трем
+});
+console.log(reduced); // 18
+
+var reduced = numbers.reduceRight(function(a,b) {
+	 return a - b ; 
+});
+console.log(reduced); // -9
+```
+
+---
+
+Ну и еще пара методов работы с массивами - indexOf и lastIndexOf.
+
+```JS
+var numbers = [1,2,3,4,5,3,6];
+console.log(numbers.indexOf(3));
+console.log(numbers.lastIndexOf(3));
+```
+
+Если метод не найдет элемент то он вернет -1 как и при работе со строками.
 
 
 
