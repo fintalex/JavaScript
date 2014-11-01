@@ -10,6 +10,7 @@ JavaScript
 5. [Массивы](#Array)
 6. [ES5 методы массивов](#ES5ArrayMethods)
 7. [Объекты Math](#Math)
+8. [Класс Date](#Date)
 
 ###<a name='ProtoAndInher'> Прототипы и наследование </a>
 
@@ -579,6 +580,59 @@ console.log(getRandom(70,100));
 console.log(getRandom(100,200));
 ```
 
+**[Оглавление](#OGL)
+
+***<a name='Date'> Оглавление </a>
+
+Теперь немного о дате. Для работы с датами мы используем класс Date, но можно было бы использовать какие-нибудь сторонние бибиотеки. 
+
+```JS
+var date = new Date(1999, 1, 1, 10, 22, 12, 345);
+
+console.log(date);
+
+console.log(date.getMilliseconds()); // 345 // получение милисекунд
+console.log(date.getHours()); // 10 
+console.log(date.getMinutes()); // 22
+console.log(date.getSeconds()); // 12
+console.log("===");
+console.log(date.getDay()); // число месяца
+console.log(date.getHours()); // час
+console.log(date.getMonth()); // месяц
+console.log(date.getYear()); // год - возвращает последние две цифры
+console.log(date.getFullYear()); // год - возращает 4 цифры.
+
+date.setDate(15); // установить 15 число
+console.log(date);
+```
+
+---
+
+Дата и время в JS  хранятвся в виде количества милесекунда прошедших с 1 января 1970г. 
+Это называется timeSpan. В этом мы можем убедится с помощью метода getTime. Но если мы укажем дату ранее 1970, то мы получим отрицательное число.
+
+```JS
+console.log(date.getTime()); // 919063332345 
+console.log(new Date(1945, 0,1).getTime()); //-788929200000 
+```
+
+Если в конструктор передать один аргумент то это будет наш timespan.
+
+```JS 
+console.log(new Date(346534)); // Thu Jan 01 1970 03:05:46 GMT+0300 (Московское время (зима)) 
+```
+
+--- 
+
+```JS
+// для вывода только времени или только даты
+console.log(date.toTimeString()); // 10:22:12 GMT+0300 (Московское время (зима)) 
+console.log(date.toDateString()); // Mon Feb 15 1999 
+
+// для получения локального формата
+console.log(date.toLocaleTimeString()); // 10:22:12 
+console.log(date.toLocaleDateString()); // 15.02.1999 
+```
 
 
 
