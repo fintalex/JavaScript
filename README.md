@@ -530,6 +530,54 @@ console.log(numbers.lastIndexOf(3));
 
 ###<a name='Math'> Объекты Math </a>
 
+Немного об объекте Math. 
+
+```JS
+console.log(Math.pow(2,5)); // возводит в степень
+console.log(Math.sqrt(400)); // квадратный корень
+console.log(Math.sqrt(9));
+console.log(Math.abs(-300)); // взятие по модую
+
+console.log(Math.round(9.6)); // округление - обычное
+console.log(Math.round(9.2));
+
+console.log(Math.floor(5.9)); // для принудительного округления до меньшего
+console.log(Math.ceil(5.2)); // для принудительного округления до большего
+
+console.log(Math.max(6,2,5,3)); // возвращает максимальное из аргументов
+console.log(Math.min(6,2,5,3));
+
+console.log(Math.exp(2)); // возводит числе e в указанную степень 
+
+console.log(Math.log(5)); //логарифм
+
+console.log(Math.sin(1));
+console.log(Math.cos(1));
+console.log(Math.tan(1));
+console.log(Math.asin(1));
+
+console.log(Math.PI);
+console.log(Math.E);
+
+console.log(Math.LN10);
+console.log(Math.LN2);
+console.log(Math.SQRT2);
+console.log(Math.SQRT1_2);
+
+console.log(Math.random()); // возвращает случайное число от 0 - 1
+console.log(Math.random());
+console.log(Math.random());
+console.log(Math.random());
+
+// функция которрая возвращает случайное число в заданном диапазоне
+var getRandom = function (min, max) {
+	return Math.random() * (max - min) + min;
+};
+
+console.log(getRandom(5,10));
+console.log(getRandom(70,100));
+console.log(getRandom(100,200));
+```
 
 
 
