@@ -9,6 +9,7 @@ JavaScript
 4. [JSON](#JSON)
 5. [Массивы](#Array)
 6. [ES5 методы массивов](#ES5ArrayMethods)
+7. [Объекты Math](#Math)
 
 ###<a name='ProtoAndInher'> Прототипы и наследование </a>
 
@@ -525,7 +526,9 @@ console.log(numbers.lastIndexOf(3));
 
 Если метод не найдет элемент то он вернет -1 как и при работе со строками.
 
+**[Оглавление](#OGL)**
 
+###<a name='Math'> Объекты Math </a>
 
 
 
